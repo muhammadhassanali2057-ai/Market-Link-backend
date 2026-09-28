@@ -5,17 +5,22 @@ let dbPromise;
 
 async function handler(req, res) {
   try {
+    console.log("MONGODB_URI exists:", !!process.env.MONGODB_URI);
+
     if (!dbPromise) {
       dbPromise = connectDB();
     }
 
     await dbPromise;
 
+    console.log("MongoDB connection ready");
+
     return app(req, res);
   } catch (error) {
-    console.error("Database initialization failed:", error);
+    console.error("DATABASE ERROR:", error);
     return res.status(500).json({
       message: "Database connection failed",
+      error: error.message,
     });
   }
 }
