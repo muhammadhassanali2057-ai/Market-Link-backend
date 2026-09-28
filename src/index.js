@@ -1,11 +1,12 @@
 import app from "../app.js";
 import connectDB from "../config/db.js";
 
-let dbPromise;
+let dbPromise = null;
 
 async function handler(req, res) {
   try {
-    console.log("MONGODB_URI exists:", !!process.env.MONGODB_URI);
+    console.log("=== DATABASE DEBUG ===");
+    console.log("MONGODB_URI exists:", Boolean(process.env.MONGODB_URI));
 
     if (!dbPromise) {
       dbPromise = connectDB();
@@ -13,11 +14,13 @@ async function handler(req, res) {
 
     await dbPromise;
 
-    console.log("MongoDB connection ready");
+    console.log("MongoDB connection READY");
 
     return app(req, res);
   } catch (error) {
-    console.error("DATABASE ERROR:", error);
+    console.error("=== DATABASE CONNECTION ERROR ===");
+    console.error(error);
+    
     return res.status(500).json({
       message: "Database connection failed",
       error: error.message,
