@@ -28,7 +28,7 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://market-link-clicent-seven.vercel.app/",
+    origin: process.env.CLIENT_URL || "https://market-link-clicent-seven.vercel.app",
     credentials: true,
   })
 );
